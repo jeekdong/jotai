@@ -59,6 +59,8 @@ export function useAtom<Value, Update>(
     [atom]
   )
 
+  // TODO:
+  // 根据 scope 通过 getStoreContext 获取 StoreContext
   const StoreContext = getStoreContext(atom.scope)
   const [mutableSource, updateAtom, commitCallback] = useContext(StoreContext)
   const value: Value = useMutableSource(mutableSource, getAtomValue, subscribe)

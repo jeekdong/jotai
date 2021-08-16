@@ -17,6 +17,7 @@ export const createMutableSource = (target: any, getVersion: any): any => ({
   [GET_VERSION]: getVersion,
 })
 
+// 用来保证 value 更新的时候 rerender 组件
 export const useMutableSource = (
   source: any,
   getSnapshot: any,
@@ -41,6 +42,8 @@ export const useMutableSource = (
     state[2] !== subscribe
   ) {
     currentSnapshot = getSnapshot(source[TARGET])
+    // TODO:
+    // 迷惑，为什么要在 render 中去执行更新 state 的事情
     setState([
       /* [0] */ source,
       /* [1] */ getSnapshot,

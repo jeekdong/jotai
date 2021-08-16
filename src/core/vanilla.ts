@@ -48,6 +48,7 @@ export type AtomState<Value = unknown> = {
   p?: InterruptablePromise // read promise
   c?: () => void // cancel read promise
   w?: Promise<void> // write promise
+  // 这个就是实际的 value 值
   v?: NonPromise<Value>
   r: Revision
   i?: InvalidatedRevision
@@ -74,6 +75,7 @@ type StateVersion = number
 type PendingMap = Map<AnyAtom, ReadDependencies | undefined>
 
 // mutable state
+// TODO: 这是 State 的类型
 export type State = {
   l?: StateListener
   v: StateVersion
@@ -617,9 +619,12 @@ const commitAtomState = <Value>(
   }
 }
 
+// TODO:
+// 看起来是把所有 pending 的 atomState 中的 listener 执行
 export const flushPending = (state: State): void => {
   const pending = Array.from(state.p)
   state.p.clear()
+  // TODO: 完全不知道这里 dependency 的意思
   pending.forEach(([atom, prevDependencies]) => {
     const atomState = getAtomState(state, atom)
     if (atomState) {

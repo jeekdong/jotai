@@ -85,6 +85,12 @@ export function atom<Value extends unknown>(
   ? never
   : PrimitiveAtom<Value> & WithInitialValue<Value>
 
+// TODO:
+// atom 函数本质是返回了一个原子化的状态对象
+// 提供 read 方法，返回该状态值（内部借助 get ）
+// 提供 write 方法，返回修改该状态值的方法 （内部借助 set）
+// 如果传入 atom 的是个值，那么会自动给你写入 read 和 write 方法，同时 init 为初始值
+// 值得注意的是，atom 还有个 scope 属性，表示作用范围
 export function atom<Value, Update>(
   read: Value | Read<Value>,
   write?: Write<Update>

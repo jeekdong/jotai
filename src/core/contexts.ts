@@ -35,6 +35,10 @@ export type StoreForDevelopment = [
 
 export type Store = StoreForProduction | StoreForDevelopment
 
+// TODO:
+// 创建 store
+// store 返回三个方法的数组
+// state:
 const createStoreForProduction = (
   initialValues?: Iterable<readonly [Atom<unknown>, unknown]>
 ): StoreForProduction => {
@@ -103,6 +107,9 @@ type StoreContext = Context<Store>
 
 const StoreContextMap = new Map<Scope | undefined, StoreContext>()
 
+// TODO:
+// StoreContextMap 是个全局变量
+// key 为 scope，value 为 store context
 export const getStoreContext = (scope?: Scope) => {
   if (!StoreContextMap.has(scope)) {
     StoreContextMap.set(scope, createContext(createStore()))
